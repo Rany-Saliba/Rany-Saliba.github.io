@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiz</title>
+    <style>
+      /* CSS Styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      h1 {
+        text-align: center;
+        color: #333333;
+      }
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #999999;
+      }
+      input[type="radio"] {
+        margin-bottom: 10px;
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      input[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      /* Hide the correct answers */
+      .correct-answer {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz</h1>
+    <form id="quiz-form" onsubmit="return false;">
+      <h2>Question 1:</h2>
+      <p>What is the capital of Canada?</p>
+      <label>
+        <input type="radio" name="q1" value="a">
+        a) Ottawa
+      </label><br>
+      <label>
+        <input type="radio" name="q1" value="b">
+        b) Toronto
+      </label><br>
+      <label>
+        <input type="radio" name="q1" value="c">
+        c) Vancouver
+      </label><br>
+      <div class="correct-answer">Correct Answer: a) Ottawa</div>
+      
+      <h2>Question 2:</h2>
+      <p>What is the largest planet in our solar system?</p>
+      <label>
+        <input type="radio" name="q2" value="a">
+        a) Venus
+      </label><br>
+      <label>
+        <input type="radio" name="q2" value="b">
+        b) Jupiter
+      </label><br>
+      <label>
+        <input type="radio" name="q2" value="c">
+        c) Earth
+      </label><br>
+      <div class="correct-answer">Correct Answer: b) Jupiter</div>
+      
+      <h2>Question 3:</h2>
+      <p>What is the largest organ in the human body?</p>
+      <label>
+        <input type="radio" name="q3" value="a">
+        a) Heart
+      </label><br>
+      <label>
+        <input type="radio" name="q3" value="b">
+        b) Brain
+      </label><br>
+      <label>
+        <input type="radio" name="q3" value="c">
+        c) Skin
+      </label><br>
+      <div class="correct-answer">Correct Answer: c) Skin</div>
+      
+      <h2>Question 4:</h2>
+      <p>What is the tallest mammal?</p>
+      <label>
+        <input type="radio" name="q4" value="a">
+        a) Giraffe
+      </label><br>
+      <label>
+        <input type="radio" name="q4" value="b">
+        b) Elephant
+      </label><br>
+      <label>
+        <input type="radio" name="q4" value="c">
+        c) Rhinoceros
+      </label><br>
+      <div class="correct-answer">Correct Answer: a) Giraffe</div>
+      
+      <h2>Question 5:</h2>
+      <p>What is the largest ocean on Earth?</p>
+      <label>
+        <input type="radio" name="q1" value="a">
+        a) Indian Ocean
+      </label><br>
+      <label>
+        <input type="radio" name="q1" value="b">
+        b) Atlantic Ocean
+      </label><br>
+      <label>
+        <input type="radio" name="q1" value="c">
+        c) Pacific Ocean
+      </label><br>
+      <div class="correct-answer">Correct Answer: c) Pacific Ocean</div>
+      <input type="submit" value="Submit" onclick="submitQuiz()">
+    </form>
+    
+    <div id="result" style="display:none">
+      <h2>Quiz Result:</h2>
+      <ul id="result-list"></ul>
+      <p>Your score is <span id="score"></span>/5</p>
+    </div>
+
+    <script>
+      // JavaScript Code
+      function checkAnswers() {
+        let form = document.getElementById("quiz-form");
+        let resultDiv = document.getElementById("result");
+        let resultList = document.getElementById("result-list");
+        let score = 0;
+
+        for (let i = 1; i <= 5; i++) {
+          let radios = form.elements[`q${i}`];
+          let selectedAnswer = "";
+
+          for (let j = 0; j < radios.length; j++) {
+            if (radios[j].checked) {
+              selectedAnswer = radios[j].value;
+              break;
+            }
+          }
+          
+          // Show correct answer
+          let correctAnswerDiv = form.querySelector(`#q${i} .correct-answer`);
+          correctAnswerDiv.style.display = "block";
+
+          // Check answer and add to score
+          if (selectedAnswer === "a") {
+            score++;
+          }
+
+          // Add question and answer to result list
+          let li = document.createElement("li");
+          li.innerHTML = `Question ${i}: ${radios[0].parentNode.innerText.trim()} <br> Your Answer: ${selectedAnswer} <br> Correct Answer: ${correctAnswerDiv.innerText.trim()}`;
+          resultList.appendChild(li);
+        }
+
+        // Show quiz result
+        resultDiv.style.display = "block";
+        document.getElementById("score").innerText = score;
+      }
+    </script>
+  </body>
+</html>
+    
+
+      
