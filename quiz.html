@@ -192,43 +192,44 @@
       <p>Your score is <span id="score"></span>/5</p>
     </div>
 
-    // check if all questions have been answered
-    if (selectedAnswers.length < questions.length) {
-      alert('Please answer all questions before submitting.');
-      return;
-    }
+   <script>
+      // JavaScript Code
+      function checkAnswers() {
+        let form = document.getElementById("quiz-form");
+        let resultDiv = document.getElementById("result");
+        let resultList = document.getElementById("result-list");
+        let score = 0;
 
-    // calculate the score
-    let score = 0;
-    for (let i = 0; i < questions.length; i++) {
-      if (selectedAnswers[i] === questions[i].correctAnswer) {
-        score++;
-      }
-    }
-    
-    // disable the form elements
-    for (let i = 0; i < questions.length; i++) {
-      const answerOptions = document.getElementsByName(`question-${i}`);
-      for (let j = 0; j < answerOptions.length; j++) {
-        answerOptions[j].disabled = true;
-      }
-    }
+        for (let i = 1; i <= 7; i++) {
+          let radios = form.elements[`q${i}`];
+          let selectedAnswer = "";
 
-    // display the quiz result
-    const resultDiv = document.getElementById('result');
-    resultDiv.style.display = 'block';
-    const scoreSpan = document.getElementById('score');
-    scoreSpan.textContent = score;
-    const resultList = document.getElementById('result-list');
-    for (let i = 0; i < questions.length; i++) {
-      const li = document.createElement('li');
-      const questionText = document.createTextNode(questions[i].question);
-      const answerText = document.createTextNode(`Answer: ${questions[i].answerOptions[questions[i].correctAnswer]}`);
-      li.appendChild(questionText);
-      li.appendChild(document.createElement('br'));
-      li.appendChild(answerText);
-      resultList.appendChild(li);
-    }
-  }
+          for (let j = 0; j < radios.length; j++) {
+            if (radios[j].checked) {
+              selectedAnswer = radios[j].value;
+              break;
+            }
+          }
+          
+          // Show correct answer
+          let correctAnswerDiv = form.querySelector(`#q${i} .correct-answer`);
+          correctAnswerDiv.style.display = "block";
+
+          // Check answer and add to score
+          if (selectedAnswer === "a") {
+            score++;
+          }
+
+          // Add question and answer to result list
+          let li = document.createElement("li");
+          li.innerHTML = `Question ${i}: ${radios[0].parentNode.innerText.trim()} <br> Your Answer: ${selectedAnswer} <br> Correct Answer: ${correctAnswerDiv.innerText.trim()}`;
+          resultList.appendChild(li);
+        }
+
+        // Show quiz result
+        resultDiv.style.display = "block";
+        document.getElementById("score").innerText = score;
+      }
+    </script>
   </body>
 </html>
