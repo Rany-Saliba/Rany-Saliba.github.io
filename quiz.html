@@ -192,55 +192,44 @@
       <p>Your score is <span id="score"></span>/5</p>
     </div>
 
-   <script>
-		const form = document.getElementById("quiz-form");
-		const resultDiv = document.getElementById("result");
-		const resultList = document.getElementById("result-list");
-		const scoreSpan = document.getElementById("score");
+    <script>
+      // JavaScript Code
+      function checkAnswers() {
+        let form = document.getElementById("quiz-form");
+        let resultDiv = document.getElementById("result");
+        let resultList = document.getElementById("result-list");
+        let score = 0;
 
-		form.addEventListener("submit", e => {
-			e.preventDefault();
+        for (let i = 1; i <= 7; i++) {
+          let radios = form.elements[`q${i}`];
+          let selectedAnswer = "";
 
-			const q1Answer = form.elements["q1"].value;
-			const q2Answer = form.elements["q2"].value;
-			const q3Answer = form.elements["q3"].value;
+          for (let j = 0; j < radios.length; j++) {
+            if (radios[j].checked) {
+              selectedAnswer = radios[j].value;
+              break;
+            }
+          }
+          
+          // Show correct answer
+          let correctAnswerDiv = form.querySelector(`#q${i} .correct-answer`);
+          correctAnswerDiv.style.display = "block";
 
-			let score = 0;
-      
-      if (q1Answer === "a") {
-				score++;
-			}
-			if (q2Answer === "a") {
-				score++;
-			}
-			if (q3Answer === "a") {
-				score++;
-			}
+          // Check answer and add to score
+          if (selectedAnswer === "a") {
+            score++;
+          }
 
-			scoreSpan.textContent = score;
-			resultDiv.style.display = "block";
+          // Add question and answer to result list
+          let li = document.createElement("li");
+          li.innerHTML = `Question ${i}: ${radios[0].parentNode.innerText.trim()} <br> Your Answer: ${selectedAnswer} <br> Correct Answer: ${correctAnswerDiv.innerText.trim()}`;
+          resultList.appendChild(li);
+        }
 
-			const q1ListItem = document.createElement("li");
-			q1ListItem.textContent = "Question 1: What is the capital of France? Answer: Paris";
-			resultList.appendChild(q1ListItem);
-
-			const q2ListItem = document.createElement("li");
-			q2ListItem.textContent = "Question 2: What is the largest country in the world? Answer: Russia";
-			resultList.appendChild(q2ListItem);
-      
-      const q1ListItem = document.createElement("li");
-			q1ListItem.textContent = "Question 1: What is the capital of France? Answer: Paris";
-			resultList.appendChild(q1ListItem);
-
-			const q2ListItem = document.createElement("li");
-			q2ListItem.textContent = "Question 2: What is the largest country in the world? Answer: Russia";
-			resultList.appendChild(q2ListItem);
-
-			const q3ListItem = document.createElement("li");
-			q3ListItem.textContent = "Question 3: What is the highest mountain in the world? Answer: Mount Everest";
-			resultList.appendChild(q3ListItem);
-
-			form.style.display = "none";
-		});
+        // Show quiz result
+        resultDiv.style.display = "block";
+        document.getElementById("score").innerText = score;
+      }
+    </script>
   </body>
 </html>
