@@ -28,21 +28,74 @@
         cursor: pointer;
         float: right;
       }
+      .error {
+        color: red;
+        font-size: 0.8em;
+        margin-top: 5px;
+      }
     </style>
   </head>
   <body>
     <h1>Welcome to the Quiz</h1>
-    <form action="quiz.html">
-      <label for="name">Enter your name:</label>
-      <input type="text" id="name" name="name" required><br><br>
+    <form>
+      <label for="first-name">Enter your first name:</label>
+      <input type="text" id="first-name" name="first-name" required><br><br>
+      <label for="last-name">Enter your last name:</label>
+      <input type="text" id="last-name" name="last-name" required><br><br>
+      <label for="phone-number">Enter your phone number:</label>
+      <input type="tel" id="phone-number" name="phone-number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+      <span class="error">Please enter a valid phone number (e.g. 123-456-7890)</span><br><br>
+      <label for="birthday">Enter your birthday date:</label>
+      <input type="date" id="birthday" name="birthday" required><br><br>
       <label for="email">Enter your email:</label>
-      <input type="email" id="email" name="email" required><br><br>
+      <input type="email" id="email" name="email" required>
+      <span class="error">Please enter a valid email address (e.g. name@example.com)</span><br><br>
       <input type="submit" value="Start Quiz">
     </form>
-    <nav>
-      <ul>
-        <li><a href="index.html">Return to Main</a></li>
-      </ul>
-    </nav>
+    <script>
+      // JavaScript code for the quiz main page
+      const form = document.querySelector("form");
+      const phoneNumberInput = document.getElementById("phone-number");
+      const phoneNumberError = phoneNumberInput.nextElementSibling;
+      const emailInput = document.getElementById("email");
+      const emailError = emailInput.nextElementSibling;
+      
+      form.addEventListener("submit", (event) => {
+        event.preventDefault(); // prevent the form from submitting
+        const firstName = form["first-name"].value;
+        const lastName = form["last-name"].value;
+        const phoneNumber = phoneNumberInput.value;
+        const birthday = form.birthday.value;
+        const email = emailInput.value;
+        
+        // Validate phone number
+        const phoneNumberPattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+        if (!phoneNumberPattern.test(phoneNumber)) {
+          phoneNumberError.style.display = "inline-block";
+          return
+        } else {
+          phoneNumberError.style.display = "none";
+        }
+    
+        // Validate email address
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          emailError.style.display = "inline-block";
+          return;
+        } else {
+          emailError.style.display = "none";
+        }
+    
+        // Store user information in session storage
+        sessionStorage.setItem("firstName", firstName);
+        sessionStorage.setItem("lastName", lastName);
+        sessionStorage.setItem("phoneNumber", phoneNumber);
+        sessionStorage.setItem("birthday", birthday);
+        sessionStorage.setItem("email", email);
+    
+        // Redirect to the quiz page
+        window.location.href = "quiz.html";
+      });
+    </script>
   </body>
 </html>
