@@ -69,7 +69,7 @@
         const email = emailInput.value;
         
         // Validate phone number
-        const phoneNumberPattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+        const phoneNumberPattern = /^[0-9]{3}-[0-9]{8}$/;
         if (!phoneNumberPattern.test(phoneNumber)) {
           phoneNumberError.style.display = "inline-block";
           return
@@ -97,5 +97,10 @@
         window.location.href = "quiz.html";
       });
     </script>
+    <nav>
+      <ul>
+        <li><a href="index.html">Return to Main</a></li>
+      </ul>
+    </nav>
   </body>
 </html>
